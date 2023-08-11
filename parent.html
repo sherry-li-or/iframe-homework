@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <div id="u" style="font-size: 10pt"></div>
+    <p>
+      <button onclick="myiframe.contentWindow.postMessage('test', '*');">
+        send hello to children(postmessage)
+      </button>
+    </p>
+    <iframe
+      id="myiframe"
+      src="/main.html"
+      width="500"
+      height="500"
+      scrolling="yes"
+      frameborder="1"
+    >
+    </iframe>
+    <script>
+      // 2. 接收 children button 訊息
+      window.onmessage = function (e) {
+        if (e.data == "test-from-children") {
+          alert("come from children postmessage");
+        }
+      };
+
+      const button = document.querySelector("button");
+
+      window.addEventListener(
+        "message",
+        function (e) {
+          // if (!event.origin.match('http://localhost:5500')) {
+          //   return;
+          // }
+          let message = e.data;
+          console.log("message", message.height);
+          if (message.height) {
+            const iframe = document.getElementById("myiframe");
+            iframe.height = message.height + "px";
+          }
+        },
+        false
+      );
+    </script>
+  </body>
+</html>

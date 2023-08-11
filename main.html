@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1 id="u" style="font-size: 10pt">Hello World!!!</h1>
+    <h1>I am iframe (child)</h1>
+    <div id="message"></div>
+  </body>
+
+  <script>
+    // 1. 接收 parent button 訊息
+    window.onmessage = function (e) {
+      if (e.data == "test") {
+        alert("come from parent postmessage");
+
+        document.getElementById("message").innerHTML = e.data;
+      }
+    };
+
+    const body = document.querySelector("body");
+
+
+    const height = body.clientHeight;
+    window.parent.postMessage({ height }, "*");
+  </script>
+</html>
